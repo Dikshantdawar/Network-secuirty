@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureNet | Network Security Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a2463;
+            --secondary: #3e92cc;
+            --accent: #d8315b;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #081a48;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(10, 36, 99, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 2.5rem;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .service-content {
+            padding: 30px;
+        }
+        
+        .service-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--light);
+        }
+        
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-icon {
+            background-color: var(--secondary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Testimonials */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .testimonial-card:before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--secondary);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-btns .btn {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 15px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 120px 0 80px;
+            }
+            
+            .section {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h1>SecureNet</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Protect Your Network. Secure Your Future.</h1>
+            <p>Comprehensive network security solutions for businesses of all sizes. Protect your data, systems, and reputation with our advanced security services.</p>
+            <div class="hero-btns">
+                <a href="#services" class="btn btn-primary">Our Services</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Security Services</h2>
+                <p>Comprehensive solutions to protect your digital assets</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Network Security</h3>
+                        <p>Protect your network infrastructure from unauthorized access, misuse, malfunction, modification, and improper disclosure.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Penetration Testing</h3>
+                        <p>Identify vulnerabilities in your systems before attackers do. Our ethical hackers simulate real-world attacks to find weaknesses.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-virus-slash"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Malware Protection</h3>
+                        <p>Advanced solutions to detect, prevent, and remove malicious software from your systems and networks.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-virus"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Firewall Management</h3>
+                        <p>Configure and maintain firewalls to control incoming and outgoing network traffic based on predetermined security rules.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Security Audits</h3>
+                        <p>Comprehensive assessment of your security posture to identify risks and ensure compliance with industry standards.</p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Incident Response</h3>
+                        <p>Quick and effective response to security breaches to minimize damage and recover from attacks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose SecureNet</h2>
+                <p>Our key differentiators in network security</p>
+            </div>
+            <div class="features-container">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>24/7 Monitoring</h3>
+                        <p>Our security experts monitor your systems around the clock to detect and respond to threats immediately.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Certified Experts</h3>
+                        <p>Our team consists of industry-certified security professionals with years of experience.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Advanced Technology</h3>
+                        <p>We use cutting-edge tools and technologies to provide the best protection for your network.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>24/7 Support</h3>
+                        <p>Our dedicated support team is always available to assist you with any security concerns.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Compliance</h3>
+                        <p>We ensure your security measures comply with industry standards and regulations.</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Continuous Updates</h3>
+                        <p>We continuously update our security protocols to address emerging threats.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Client Testimonials</h2>
+                <p>What our clients say about our services</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>SecureNet transformed our security posture. Their proactive approach and expertise have given us peace of mind knowing our systems are protected from threats.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">JD</div>
+                        <div>
+                            <h4>John Doe</h4>
+                            <p>CTO, TechCorp</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The penetration testing service was incredibly thorough. They found vulnerabilities we never knew existed and provided clear guidance on how to fix them.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">AS</div>
+                        <div>
+                            <h4>Alice Smith</h4>
+                            <p>Security Director, FinSecure</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>After the security audit, we implemented several recommendations from SecureNet. Our compliance rating improved significantly, and we passed our audit with flying colors.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-img">RJ</div>
+                        <div>
+                            <h4>Robert Johnson</h4>
+                            <p>CEO, HealthPlus</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with our security experts</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>DIKSHANT DAWAR</h4>
+                            <p>Network Security Expert</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>dawardikshant90@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Delhi, India</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SecureNet</h3>
+                    <p>Providing comprehensive network security solutions to protect your business from cyber threats.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Network Security</a></li>
+                        <li><a href="#">Penetration Testing</a></li>
+                        <li><a href="#">Malware Protection</a></li>
+                        <li><a href="#">Firewall Management</a></li>
+                        <li><a href="#">Security Audits</a></li>
+                        <li><a href="#">Incident Response</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest security updates and tips.</p>
+                    <form class="footer-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 DIKSHANT DAWAR. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const footerForm = document.querySelector('.footer-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+        
+        footerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing to our newsletter!');
+            this.reset();
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+    </script>
+</body>
+</html>
