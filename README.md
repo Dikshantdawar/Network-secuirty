@@ -1,1 +1,1 @@
-# Network-secuirty
+This project focuses on improving network security by designing and implementing effective mechanisms to detect and prevent unauthorized access or malicious activities. It involves analyzing network traffic, identifying potential vulnerabilities, and deploying tools such as firewalls, encryption, and intrusion detection/prevention systems (IDS/IPS). The goal is to ensure data integrity, confidentiality, and availability by mitigating various cyber threats like DDoS attacks, phishing, malware, and packet sniffing.
